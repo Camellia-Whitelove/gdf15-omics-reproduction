@@ -1,11 +1,12 @@
-.libPaths(c(normalizePath('work/gdf15/R-library'),.libPaths()))
+source('01_muscle_RNAseq/code/common.R')
+.libPaths(c(normalizePath('01_muscle_RNAseq/R-library', mustWork=FALSE),.libPaths()))
 suppressPackageStartupMessages(library(ShortRead))
 args<-commandArgs(trailingOnly=TRUE);worker<-as.integer(args[1]);workers<-as.integer(args[2])
-meta<-read.delim('work/gdf15/data/ena_runs.tsv');meta<-meta[order(meta$sample_alias),];meta<-meta[(seq_len(nrow(meta))-1)%%workers==worker-1,,drop=FALSE]
+meta<-read.delim('01_muscle_RNAseq/data/ena_runs.tsv');meta<-meta[order(meta$sample_alias),];meta<-meta[(seq_len(nrow(meta))-1)%%workers==worker-1,,drop=FALSE]
 results<-list();cycles<-list();lengths<-list()
 for(i in seq_len(nrow(meta))){
- run<-meta$run_accession[i];paths<-paste0('work/gdf15/data/clean/',run,'_',1:2,'.fastq.gz')
- while(!all(file.exists(paths)))Sys.sleep(5)
+ run<-meta$run_accession[i];paths<-paste0('01_muscle_RNAseq/data/clean/',run,'_',1:2,'.fastq.gz')
+ if(!all(file.exists(paths))) stop('Missing prerequisite files; run the previous stage first.')
  cat(format(Sys.time()),'CLEAN QC START',run,'\n');flush.console()
  ids<-list();total<-c(0,0)
  for(e in 1:2){
@@ -26,13 +27,14 @@ for(i in seq_len(nrow(meta))){
   used<-which(cn>0);cycles[[key]]<-data.frame(sample=meta$sample_alias[i],run=run,end=e,cycle=used,mean_phred=cs[used]/cn[used])
   tab<-table(w);lengths[[key]]<-data.frame(sample=meta$sample_alias[i],run=run,end=e,length=as.integer(names(tab)),sampled_reads=as.integer(tab))
  }
- expected<-jsonlite::fromJSON(paste0('outputs/qc/trimming/',run,'.json'))$read_counts$output
+ expected<-jsonlite::fromJSON(paste0('01_muscle_RNAseq/outputs/qc/trimming/',run,'.json'))$read_counts$output
  if(total[1]!=total[2] || total[1]!=expected)stop('Clean pair count differs from Cutadapt output: ',run)
  if(total[1]>meta$read_count[i] || total[1]<0.95*meta$read_count[i])stop('Unexpected retention: ',run)
- write.csv(do.call(rbind,results),paste0('outputs/qc/clean_qc_summary_worker',worker,'.csv'),row.names=FALSE)
- write.csv(do.call(rbind,cycles),paste0('outputs/qc/clean_quality_by_cycle_worker',worker,'.csv'),row.names=FALSE)
- write.csv(do.call(rbind,lengths),paste0('outputs/qc/clean_length_distribution_worker',worker,'.csv'),row.names=FALSE)
+ write.csv(do.call(rbind,results),paste0('01_muscle_RNAseq/outputs/qc/clean_qc_summary_worker',worker,'.csv'),row.names=FALSE)
+ write.csv(do.call(rbind,cycles),paste0('01_muscle_RNAseq/outputs/qc/clean_quality_by_cycle_worker',worker,'.csv'),row.names=FALSE)
+ write.csv(do.call(rbind,lengths),paste0('01_muscle_RNAseq/outputs/qc/clean_length_distribution_worker',worker,'.csv'),row.names=FALSE)
  cat(format(Sys.time()),'CLEAN QC PASS',run,total[1],'pairs\n');flush.console()
- writeLines('passed',paste0('work/gdf15/data/clean/',run,'.qc_passed'))
+ writeLines('passed',paste0('01_muscle_RNAseq/data/clean/',run,'.qc_passed'))
 }
 cat('CLEAN QC WORKER COMPLETE\n')
+

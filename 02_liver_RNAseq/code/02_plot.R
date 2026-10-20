@@ -1,3 +1,5 @@
+extra <- Sys.getenv('GDF15_R_LIB'); if(nzchar(extra)) .libPaths(c(extra,.libPaths()))
+if (dir.exists('02_liver_RNAseq/code')) setwd('02_liver_RNAseq')
 # Can render from the provided CSV files without loading the DESeq2 models.
 extra <- Sys.getenv('GDF15_R_LIB');if(nzchar(extra)).libPaths(c(extra,.libPaths()))
 suppressPackageStartupMessages({library(ggplot2);library(pheatmap)})
@@ -15,3 +17,4 @@ for(nm in c('VST_Euclidean','rlog_Euclidean','raw_Poisson')) {
  png(paste0('07_figures/Fig1j_',nm,'.png'),width=1800,height=1500,res=180)
  pheatmap(m,clustering_distance_rows=d,clustering_distance_cols=d,border_color=NA,fontsize=9,main=paste('Fig.1j reproduction candidate\n',label));dev.off()
 }
+

@@ -1,5 +1,6 @@
+source('01_muscle_RNAseq/code/common.R')
 # Quick check: PKA/calcium genes on the author VST scale
-author <- read.csv(gzfile('work/gdf15/data/GSE229794_CountsNormalizedByDESeq2.csv.gz'),
+author <- read.csv(gzfile('01_muscle_RNAseq/data/GSE229794_CountsNormalizedByDESeq2.csv.gz'),
                    check.names = FALSE, row.names = 1)
 am <- as.matrix(author); storage.mode(am) <- 'numeric'
 g <- grep('^GDF15', colnames(am)); p <- grep('^PairFed', colnames(am))
@@ -12,3 +13,4 @@ for (gn in pka)
     cat(sprintf('%-9s not in author matrix\n', gn))
 cat('\nTop 15 positive dVST (author matrix):\n'); print(round(sort(d, decreasing = TRUE)[1:15], 3))
 cat('\nTop 15 negative dVST (author matrix):\n'); print(round(sort(d)[1:15], 3))
+

@@ -1,5 +1,5 @@
 $ErrorActionPreference = 'Stop'
-$taskDataDir = Join-Path $PSScriptRoot 'data'
+$taskDataDir = Join-Path $PSScriptRoot '../../data'
 $taskRawDir = Join-Path $taskDataDir 'raw'
 New-Item -ItemType Directory -Force -Path $taskRawDir | Out-Null
 $taskRuns = Import-Csv -LiteralPath (Join-Path $taskDataDir 'ena_runs.tsv') -Delimiter "`t"
@@ -36,3 +36,4 @@ foreach ($taskRun in ($taskRuns | Sort-Object sample_alias)) {
     }
 }
 Write-Output 'All 32 FASTQ files downloaded and verified. Data download stage complete.'
+

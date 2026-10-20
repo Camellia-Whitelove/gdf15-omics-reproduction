@@ -1,14 +1,19 @@
-import csv, hashlib, json, os, pathlib, subprocess, time
+import csv, hashlib, json, os, pathlib, subprocess, time, sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
-base = pathlib.Path(__file__).resolve().parent / 'data'
+base = pathlib.Path(__file__).resolve().parents[2] / 'data'
 raw = base / 'raw'
-raw.mkdir(exist_ok=True)
+raw.mkdir(parents=True,exist_ok=True)
 tasks=[]
 with (base/'ena_runs.tsv').open(encoding='utf-8-sig', newline='') as f:
     for r in sorted(csv.DictReader(f,delimiter='\t'),key=lambda x:x['sample_alias']):
         for u,s,h in zip(r['fastq_ftp'].split(';'),r['fastq_bytes'].split(';'),r['fastq_md5'].split(';')):
             tasks.append((u,int(s),h,r['sample_alias']))
+
+if '--check-only' in sys.argv:
+    assert len(tasks)==32 and len({t[0] for t in tasks})==32
+    print(f'PASS: {len(tasks)} paired FASTQ files; {sum(t[1] for t in tasks)} bytes; no download requested.')
+    raise SystemExit(0)
 
 chunk_size=4*1024*1024
 def fetch_segment(task):
@@ -30,7 +35,7 @@ try:
             print(f'Verified existing {number}/32: {name}',flush=True)
             continue
         pieces=raw/(name+'.chunks')
-        pieces.mkdir(exist_ok=True)
+        pieces.mkdir(parents=True,exist_ok=True)
         segments=[]
         for start in range(0,size,chunk_size):
             end=min(size-1,start+chunk_size-1)
@@ -65,3 +70,4 @@ except Exception as error:
     (base/'download_failure.txt').write_text(str(error),encoding='utf-8')
     print('PAUSED: '+str(error),flush=True)
     raise SystemExit(1)
+

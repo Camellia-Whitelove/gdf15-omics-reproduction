@@ -1,3 +1,5 @@
+from pathlib import Path
+MODULE = Path(__file__).resolve().parents[2]
 # -*- coding: utf-8 -*-
 # Extract vector graphic colors (panel i bars) and heatmap palette (panel b) from Fig. 4 page.
 import sys, io, collections
@@ -6,7 +8,7 @@ import pdfplumber
 import pypdfium2 as pdfium
 from PIL import Image
 
-PDF = r'C:\GDF15_核心图交接包_20261011\04_论文与要求\s41586-023-06249-4.pdf'
+PDF = str(MODULE/'data/paper.pdf')
 SCALE = 300 / 72
 
 plumb = pdfplumber.open(PDF)
@@ -54,3 +56,4 @@ sample('panel i area (x 425-565, y 340-520)', 425, 340, 565, 520)
 sample('panel b heatmap body (x 125-345, y 45-215)', 125, 45, 345, 215)
 # heatmap colorbar region guess (right of heatmap, "Sample distance" label)
 sample('panel b right legend (x 340-420, y 45-215)', 340, 45, 420, 215)
+

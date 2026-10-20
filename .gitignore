@@ -1,4 +1,20 @@
 # R
+01_muscle_RNAseq/outputs/
+02_liver_RNAseq/02_qc/
+02_liver_RNAseq/03_models/
+02_liver_RNAseq/04_plot_data/
+02_liver_RNAseq/07_figures/
+02_liver_RNAseq/06_records/file_manifest.csv
+02_liver_RNAseq/06_records/modeling_complete.txt
+02_liver_RNAseq/06_records/*comparison.csv
+02_liver_RNAseq/06_records/*methods.txt
+02_liver_RNAseq/06_records/package_versions.csv
+01_muscle_RNAseq/data/raw/
+01_muscle_RNAseq/data/clean/
+01_muscle_RNAseq/data/bam*/
+01_muscle_RNAseq/data/*.xlsx
+01_muscle_RNAseq/data/paper.pdf
+02_liver_RNAseq/01_data/*.gz
 .Rhistory
 .RData
 .Rproj.user/
@@ -10,7 +26,7 @@ __pycache__/
 .venv/
 venv/
 
-# 大体积中间文件（可由脚本重新生成 / 从公共数据库下载）
+# ������м��ļ������ɽű��������� / �ӹ������ݿ����أ�
 *.fastq.gz
 *.fq.gz
 *.fastq
@@ -25,17 +41,18 @@ R-library/
 *.fna
 *.fa.gz
 
-# 参考与索引
+# �ο�������
 reference/
 reference_index/
 index/
 
-# 系统与编辑器
+# ϵͳ��༭��
 .DS_Store
 Thumbs.db
 desktop.ini
 
-# 临时与日志
+# ��ʱ����־
 *.log
 tmp/
 temp/
+

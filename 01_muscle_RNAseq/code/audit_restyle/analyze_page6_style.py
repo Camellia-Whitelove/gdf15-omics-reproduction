@@ -1,3 +1,5 @@
+from pathlib import Path
+MODULE = Path(__file__).resolve().parents[2]
 # -*- coding: utf-8 -*-
 # Render paper page 6 (Fig. 4) and programmatically extract style of panels b and i.
 import sys, io, json, collections
@@ -6,7 +8,8 @@ import pdfplumber
 import pypdfium2 as pdfium
 from PIL import Image
 
-PDF = r'C:\GDF15_核心图交接包_20261011\04_论文与要求\s41586-023-06249-4.pdf'
+PDF = str(MODULE/'data/paper.pdf')
+(MODULE/'outputs/audit_20261011').mkdir(parents=True,exist_ok=True)
 SCALE = 300 / 72  # render at 300 dpi
 
 plumb = pdfplumber.open(PDF)
@@ -26,7 +29,7 @@ for t in ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
 
 pdf = pdfium.PdfDocument(PDF)
 img = pdf[5].render(scale=SCALE).to_pil()
-img.save(r'C:\GDF15_核心图交接包_20261011\01_继续分析项目\outputs\audit_20261011\paper_page6_300dpi.png')
+img.save(str(MODULE/'outputs/audit_20261011/paper_page6_300dpi.png'))
 print('rendered:', img.size)
 
 def px(x_pt, y_pt):
@@ -39,3 +42,4 @@ def region_colors(x0, y0, x1, y1, topn=12):
             r, g, b = img.getpixel((xi, yi))[:3]
             cnt[(r // 8 * 8, g // 8 * 8, b // 8 * 8)] += 1
     return cnt.most_common(topn)
+

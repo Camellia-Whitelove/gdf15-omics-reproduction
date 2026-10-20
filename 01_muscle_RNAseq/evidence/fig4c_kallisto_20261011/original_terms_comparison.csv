@@ -1,0 +1,41 @@
+"run","GO","description","Count","pvalue","padj","GeneRatio","tested"
+"padj_eligible_unconditional","GO:0019207","kinase regulator activity",2,0.154511088870451,0.307654822972137,0.0666666666666667,TRUE
+"padj_eligible_unconditional","GO:0031625","ubiquitin protein ligase binding",0,NA,NA,0,FALSE
+"padj_eligible_unconditional","GO:0044389","ubiquitin-like protein ligase binding",0,NA,NA,0,FALSE
+"padj_eligible_unconditional","GO:0005516","calmodulin binding",1,0.314180484249539,0.453144929206065,0.0333333333333333,TRUE
+"padj_eligible_unconditional","GO:0042813","Wnt receptor activity",0,NA,NA,0,FALSE
+"padj_eligible_unconditional","GO:0035014","phosphatidylinositol 3-kinase regulator activity",0,NA,NA,0,FALSE
+"padj_eligible_unconditional","GO:0043560","insulin receptor substrate binding",1,0.03773329951164,0.14149987316865,0.0333333333333333,TRUE
+"padj_eligible_unconditional","GO:0030551","cyclic nucleotide binding",0,NA,NA,0,FALSE
+"padj_eligible_unconditional","GO:0030552","cAMP binding",0,NA,NA,0,FALSE
+"padj_eligible_unconditional","GO:0046935","1-phosphatidylinositol-3-kinase regulator activity",0,NA,NA,0,FALSE
+"padj_eligible_conditional","GO:0019207","kinase regulator activity",2,0.154511088870451,0.437032849874979,0.0666666666666667,TRUE
+"padj_eligible_conditional","GO:0031625","ubiquitin protein ligase binding",0,NA,NA,0,FALSE
+"padj_eligible_conditional","GO:0044389","ubiquitin-like protein ligase binding",0,NA,NA,0,FALSE
+"padj_eligible_conditional","GO:0005516","calmodulin binding",1,0.314180484249539,0.620093061018826,0.0333333333333333,TRUE
+"padj_eligible_conditional","GO:0042813","Wnt receptor activity",0,NA,NA,0,FALSE
+"padj_eligible_conditional","GO:0035014","phosphatidylinositol 3-kinase regulator activity",0,NA,NA,0,FALSE
+"padj_eligible_conditional","GO:0043560","insulin receptor substrate binding",1,0.03773329951164,0.207072985124853,0.0333333333333333,TRUE
+"padj_eligible_conditional","GO:0030551","cyclic nucleotide binding",0,NA,NA,0,FALSE
+"padj_eligible_conditional","GO:0030552","cAMP binding",0,NA,NA,0,FALSE
+"padj_eligible_conditional","GO:0046935","1-phosphatidylinositol-3-kinase regulator activity",0,NA,NA,0,FALSE
+"pvalue_tested_unconditional","GO:0019207","kinase regulator activity",2,0.109847119456472,0.24137222821865,0.0666666666666667,TRUE
+"pvalue_tested_unconditional","GO:0031625","ubiquitin protein ligase binding",0,NA,NA,0,FALSE
+"pvalue_tested_unconditional","GO:0044389","ubiquitin-like protein ligase binding",0,NA,NA,0,FALSE
+"pvalue_tested_unconditional","GO:0005516","calmodulin binding",1,0.309098699705657,0.436622055475691,0.0333333333333333,TRUE
+"pvalue_tested_unconditional","GO:0042813","Wnt receptor activity",0,NA,NA,0,FALSE
+"pvalue_tested_unconditional","GO:0035014","phosphatidylinositol 3-kinase regulator activity",0,NA,NA,0,FALSE
+"pvalue_tested_unconditional","GO:0043560","insulin receptor substrate binding",1,0.0274393809890549,0.114330754121062,0.0333333333333333,TRUE
+"pvalue_tested_unconditional","GO:0030551","cyclic nucleotide binding",0,NA,NA,0,FALSE
+"pvalue_tested_unconditional","GO:0030552","cAMP binding",0,NA,NA,0,FALSE
+"pvalue_tested_unconditional","GO:0046935","1-phosphatidylinositol-3-kinase regulator activity",0,NA,NA,0,FALSE
+"pvalue_tested_conditional","GO:0019207","kinase regulator activity",2,0.109847119456472,0.363807416445501,0.0666666666666667,TRUE
+"pvalue_tested_conditional","GO:0031625","ubiquitin protein ligase binding",0,NA,NA,0,FALSE
+"pvalue_tested_conditional","GO:0044389","ubiquitin-like protein ligase binding",0,NA,NA,0,FALSE
+"pvalue_tested_conditional","GO:0005516","calmodulin binding",1,0.309098699705657,0.596382963107354,0.0333333333333333,TRUE
+"pvalue_tested_conditional","GO:0042813","Wnt receptor activity",0,NA,NA,0,FALSE
+"pvalue_tested_conditional","GO:0035014","phosphatidylinositol 3-kinase regulator activity",0,NA,NA,0,FALSE
+"pvalue_tested_conditional","GO:0043560","insulin receptor substrate binding",1,0.0274393809890549,0.157345911519951,0.0333333333333333,TRUE
+"pvalue_tested_conditional","GO:0030551","cyclic nucleotide binding",0,NA,NA,0,FALSE
+"pvalue_tested_conditional","GO:0030552","cAMP binding",0,NA,NA,0,FALSE
+"pvalue_tested_conditional","GO:0046935","1-phosphatidylinositol-3-kinase regulator activity",0,NA,NA,0,FALSE

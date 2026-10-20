@@ -1,10 +1,12 @@
+from pathlib import Path
+MODULE = Path(__file__).resolve().parents[2]
 # -*- coding: utf-8 -*-
 # Ground-truth pixel scan of panel i (narrow bar chart) on rendered page 6.
 import sys, io, collections
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 import pypdfium2 as pdfium
 
-PDF = r'C:\GDF15_核心图交接包_20261011\04_论文与要求\s41586-023-06249-4.pdf'
+PDF = str(MODULE/'data/paper.pdf')
 SCALE = 300 / 72
 pdf = pdfium.PdfDocument(PDF)
 img = pdf[5].render(scale=SCALE).to_pil()
@@ -66,3 +68,4 @@ for name, xpt in [('bar1(left)', 536), ('bar2(right)', 547)]:
             cur = None
     if cur is not None: bands.append(cur)
     print(name, 'bands:', [(round(b[0],1), round(b[1],1), b[2].most_common(2)) for b in bands])
+

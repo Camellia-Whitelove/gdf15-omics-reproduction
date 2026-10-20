@@ -1,3 +1,5 @@
+extra <- Sys.getenv('GDF15_R_LIB'); if(nzchar(extra)) .libPaths(c(extra,.libPaths()))
+if (dir.exists('02_liver_RNAseq/code')) setwd('02_liver_RNAseq')
 # Verify final figures against original leaf order / variance expectations.
 suppressPackageStartupMessages(library(pheatmap))
 
@@ -19,4 +21,6 @@ cat('Fig.1j raw Poisson leaf order match:', identical(leaf, orig_order), '\n')
 if (!identical(leaf, orig_order)) {
   cat('Got:', paste(leaf, collapse = ','), '\n')
   cat('Expected:', paste(orig_order, collapse = ','), '\n')
+  stop('Generated clustering differs from the saved clustering order.')
 }
+

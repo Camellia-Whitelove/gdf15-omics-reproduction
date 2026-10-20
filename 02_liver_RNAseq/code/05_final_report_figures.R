@@ -1,3 +1,5 @@
+extra <- Sys.getenv('GDF15_R_LIB'); if(nzchar(extra)) .libPaths(c(extra,.libPaths()))
+if (dir.exists('02_liver_RNAseq/code')) setwd('02_liver_RNAseq')
 # Final report-style figures for liver Fig.1i / Fig.1j
 # Reads from 04_plot_data; writes to 07_figures/final/.
 extra <- Sys.getenv('GDF15_R_LIB')
@@ -93,3 +95,4 @@ grid::grid.text('Sample distance', x = 0.87, y = 0.55, rot = 90,
 dev.off()
 
 cat('Final report figures written to', outdir, '\n')
+

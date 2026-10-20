@@ -1,5 +1,5 @@
 import pathlib, re, csv, hashlib
-root=pathlib.Path(__file__).resolve().parent/'data'/'reference'
+root=pathlib.Path(__file__).resolve().parents[2]/'data'/'reference'
 gtf=root/'gencode.vM25.annotation.gtf'
 genes=[]; exon_n=0; chroms=set(); annotated=set()
 with (root/'mm10.fa').open() as inp:
@@ -22,3 +22,4 @@ for fname,expected in [('mm10.fa.gz','db005b65828db31735f384e4c5787be5'),('genco
     if actual!=expected:raise RuntimeError('Reference MD5 mismatch: '+fname)
     print('OFFICIAL MD5 PASS',fname,actual,flush=True)
 print('Annotation READY',len(genes),'genes,',exon_n,'exons,',len(annotated),'annotated chromosomes,',len(chroms),'FASTA sequences',flush=True)
+

@@ -1,7 +1,8 @@
-.libPaths(c(normalizePath('work/gdf15/R-library'), .libPaths()))
+source('01_muscle_RNAseq/code/common.R')
+.libPaths(c(normalizePath('01_muscle_RNAseq/R-library', mustWork=FALSE), .libPaths()))
 suppressPackageStartupMessages(library(ShortRead))
-dir.create('outputs/qc', recursive=TRUE, showWarnings=FALSE)
-meta <- read.delim('work/gdf15/data/ena_runs.tsv', stringsAsFactors=FALSE)
+dir.create('01_muscle_RNAseq/outputs/qc', recursive=TRUE, showWarnings=FALSE)
+meta <- read.delim('01_muscle_RNAseq/data/ena_runs.tsv', stringsAsFactors=FALSE)
 meta <- meta[order(meta$sample_alias), ]
 args <- commandArgs(trailingOnly=TRUE)
 worker <- if(length(args)) as.integer(args[1]) else 1L
@@ -10,9 +11,9 @@ meta <- meta[(seq_len(nrow(meta))-1) %% workers == worker-1, ,drop=FALSE]
 suffix <- if(workers>1) paste0('_worker',worker) else ''
 set.seed(955831)
 results <- list(); cycles <- list()
-if(workers>1 && worker==1 && file.exists('outputs/qc/raw_qc_summary.csv')) {
-  previous<-read.csv('outputs/qc/raw_qc_summary.csv')
-  previous_cycles<-read.csv('outputs/qc/raw_quality_by_cycle.csv')
+if(workers>1 && worker==1 && file.exists('01_muscle_RNAseq/outputs/qc/raw_qc_summary.csv')) {
+  previous<-read.csv('01_muscle_RNAseq/outputs/qc/raw_qc_summary.csv')
+  previous_cycles<-read.csv('01_muscle_RNAseq/outputs/qc/raw_quality_by_cycle.csv')
   for(key in unique(paste0(previous$run,'_',previous$end))) {
     results[[key]]<-previous[paste0(previous$run,'_',previous$end)==key,]
     cycles[[key]]<-previous_cycles[paste0(previous_cycles$run,'_',previous_cycles$end)==key,]
@@ -22,7 +23,7 @@ for (i in seq_len(nrow(meta))) {
   run <- meta$run_accession[i]
   if(paste0(run,'_1') %in% names(results) && paste0(run,'_2') %in% names(results)) next
   cat(format(Sys.time()), 'START', run, meta$sample_alias[i], '\n'); flush.console()
-  streams <- lapply(1:2, function(e) FastqStreamer(file.path('work/gdf15/data/raw', paste0(run, '_', e, '.fastq.gz')), n=250000))
+  streams <- lapply(1:2, function(e) FastqStreamer(file.path('01_muscle_RNAseq/data/raw', paste0(run, '_', e, '.fastq.gz')), n=250000))
   total <- 0; mismatch <- 0; sample_n <- c(0,0)
   qsum <- q20 <- q30 <- bases <- gc <- ns <- adapters <- c(0,0)
   cyc_sum <- cyc_n <- matrix(0, 2, 300)
@@ -61,12 +62,12 @@ for (i in seq_len(nrow(meta))) {
     used<-which(cyc_n[e,]>0)
     cycles[[key]]<-data.frame(sample=meta$sample_alias[i],run=run,end=e,cycle=used,mean_phred=cyc_sum[e,used]/cyc_n[e,used])
   }
-  write.csv(do.call(rbind,results),paste0('outputs/qc/raw_qc_summary',suffix,'.csv'),row.names=FALSE)
-  write.csv(do.call(rbind,cycles),paste0('outputs/qc/raw_quality_by_cycle',suffix,'.csv'),row.names=FALSE)
+  write.csv(do.call(rbind,results),paste0('01_muscle_RNAseq/outputs/qc/raw_qc_summary',suffix,'.csv'),row.names=FALSE)
+  write.csv(do.call(rbind,cycles),paste0('01_muscle_RNAseq/outputs/qc/raw_quality_by_cycle',suffix,'.csv'),row.names=FALSE)
   cat(format(Sys.time()),'PASS',run,total,'pairs\n');flush.console()
   rm(fq);gc()
 }
-png(paste0('outputs/qc/raw_quality_by_cycle',suffix,'.png'),width=1600,height=900,res=150)
+png(paste0('01_muscle_RNAseq/outputs/qc/raw_quality_by_cycle',suffix,'.png'),width=1600,height=900,res=150)
 par(mfrow=c(1,2),mar=c(4,4,3,1))
 for(e in 1:2) {
  plot(NA,xlim=c(1,maxlen[e]),ylim=c(0,40),xlab='Read position (bp)',ylab='Mean Phred score',main=paste('Raw reads: end',e))
@@ -74,5 +75,6 @@ for(e in 1:2) {
  abline(h=20,lty=2,col='grey50')
 }
 dev.off()
-writeLines(c('All reads parsed and paired IDs checked. Quality metrics use a reproducible Bernoulli sample (p=0.005) across every chunk, not just the first reads.','Adapter metric detects the exact 13-base motif only; it does not measure all partial adapters.','Raw files are unchanged.',capture.output(sessionInfo())), 'outputs/qc/raw_qc_methods.txt')
+writeLines(c('All reads parsed and paired IDs checked. Quality metrics use a reproducible Bernoulli sample (p=0.005) across every chunk, not just the first reads.','Adapter metric detects the exact 13-base motif only; it does not measure all partial adapters.','Raw files are unchanged.',capture.output(sessionInfo())), '01_muscle_RNAseq/outputs/qc/raw_qc_methods.txt')
 cat('WORKER COMPLETE:',nrow(meta),'SAMPLES PASS STRUCTURAL QC\n')
+

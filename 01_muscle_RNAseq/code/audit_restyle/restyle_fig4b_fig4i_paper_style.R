@@ -1,3 +1,4 @@
+source('01_muscle_RNAseq/code/common.R')
 # Restyle Fig 4b and Fig 4i to match the paper's Fig. 4 panels b and i (page 6).
 # Style parameters extracted programmatically from the published PDF:
 #   Fig 4b: pheatmap defaults -- RdYlBu(100) palette, grey60 cell borders, black
@@ -7,13 +8,13 @@
 #           #FA0206, GDF15 bar blue #0000FF, black borders, black SEM error bars
 #           with caps, points on bars, "P = 0.0081" above, diagonal x labels.
 # Outputs go to outputs/figures/paper_style/ (handoff figures untouched).
-.libPaths(c(normalizePath('work/gdf15/R-library'), .libPaths()))
+.libPaths(c(normalizePath('01_muscle_RNAseq/R-library', mustWork=FALSE), .libPaths()))
 suppressPackageStartupMessages({library(pheatmap); library(RColorBrewer); library(png)})
-out <- 'outputs/figures/paper_style'
+out <- '01_muscle_RNAseq/outputs/figures/paper_style'
 dir.create(out, recursive = TRUE, showWarnings = FALSE)
 
 ## ---------------- Fig 4b ----------------
-distance <- as.matrix(read.csv('outputs/statistics/poisson_sample_distances.csv',
+distance <- as.matrix(read.csv('01_muscle_RNAseq/outputs/statistics/poisson_sample_distances.csv',
                                row.names = 1, check.names = FALSE))
 grp <- function(gsm) {
   if (grepl('^GSM', gsm)) {
@@ -72,7 +73,7 @@ add_colbar_title(file.path(out, 'Fig4b_sample_distance_paperstyle.png'),
                  file.path(out, 'Fig4b_sample_distance_paperstyle.pdf'))
 
 ## ---------------- Fig 4i ----------------
-ca <- read.csv('outputs/physiology/fig4i_calcium_respiration.csv', stringsAsFactors = FALSE)
+ca <- read.csv('01_muscle_RNAseq/outputs/physiology/fig4i_calcium_respiration.csv', stringsAsFactors = FALSE)
 ca$group <- factor(ca$group, levels = c('WT-Pair-fed', 'WT-GDF15'))
 test <- t.test(CAF_minus_DAN ~ group, ca, var.equal = TRUE, alternative = 'two.sided')
 m <- tapply(ca$CAF_minus_DAN, ca$group, mean)
@@ -117,3 +118,4 @@ draw4i(); dev.off()
 
 cat('P value used on figure:', pval, '\n')
 cat('PAPER-STYLE FIGURES WRITTEN TO', out, '\n')
+

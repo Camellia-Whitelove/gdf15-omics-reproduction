@@ -1,3 +1,5 @@
+extra <- Sys.getenv('GDF15_R_LIB'); if(nzchar(extra)) .libPaths(c(extra,.libPaths()))
+if (dir.exists('02_liver_RNAseq/code')) setwd('02_liver_RNAseq')
 # Run from the unzipped package root. No extra R packages required.
 manifest <- read.csv('06_records/file_manifest.csv',stringsAsFactors=FALSE)
 stopifnot(all(file.exists(manifest$path)))
@@ -13,3 +15,4 @@ for(nm in c('VST','rlog')) {
 }
 stopifnot(readLines('06_records/modeling_complete.txt')=='success')
 cat('PASS: complete files, checksums, sample identities and plotting coordinates verified.\n')
+

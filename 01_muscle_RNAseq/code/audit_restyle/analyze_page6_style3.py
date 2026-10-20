@@ -1,3 +1,5 @@
+from pathlib import Path
+MODULE = Path(__file__).resolve().parents[2]
 # -*- coding: utf-8 -*-
 # Focused style extraction: panel i bars/points, panel b heatmap palette + legend swatches.
 import sys, io, collections
@@ -5,7 +7,7 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 import pdfplumber
 import pypdfium2 as pdfium
 
-PDF = r'C:\GDF15_核心图交接包_20261011\04_论文与要求\s41586-023-06249-4.pdf'
+PDF = str(MODULE/'data/paper.pdf')
 SCALE = 300 / 72
 plumb = pdfplumber.open(PDF)
 page = plumb.pages[5]
@@ -78,3 +80,4 @@ for xc in range(346, 381, 4):
 # sample label text color (rotated sample labels left of heatmap)
 sample('panel b left label strip (x 55-125, y 45-215)', 55, 45, 125, 215, 3)
 sample('panel b bottom label strip (x 60-345, y 185-215)', 60, 185, 345, 215, 3)
+

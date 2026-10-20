@@ -1,20 +1,21 @@
-.libPaths(c(normalizePath('work/gdf15/R-library'),.libPaths()))
+source('01_muscle_RNAseq/code/common.R')
+.libPaths(c(normalizePath('01_muscle_RNAseq/R-library', mustWork=FALSE),.libPaths()))
 suppressPackageStartupMessages(library(Rsubread))
-meta<-read.delim('work/gdf15/data/ena_runs.tsv',stringsAsFactors=FALSE);meta<-meta[order(meta$sample_alias),]
+meta<-read.delim('01_muscle_RNAseq/data/ena_runs.tsv',stringsAsFactors=FALSE);meta<-meta[order(meta$sample_alias),]
 args<-commandArgs(trailingOnly=TRUE);worker<-as.integer(args[1]);workers<-as.integer(args[2]);stopifnot(worker>=1,worker<=workers)
 meta<-meta[(seq_len(nrow(meta))-1)%%workers==worker-1,,drop=FALSE]
-stopifnot(file.exists('outputs/qc/raw_qc_passed.txt'))
-index<-'work/gdf15/data/reference/index/mm10'
-while(!file.exists(paste0(index,'.ready')))Sys.sleep(5)
-while(!all(file.exists(paste0('work/gdf15/data/clean/',meta$run_accession,'.qc_passed'))))Sys.sleep(5)
-gtf<-'work/gdf15/data/reference/gencode.vM25.exons.gtf'
-dir.create('work/gdf15/data/bam_unique',recursive=TRUE,showWarnings=FALSE)
-dir.create('outputs/alignment',recursive=TRUE,showWarnings=FALSE)
+stopifnot(file.exists('01_muscle_RNAseq/outputs/qc/raw_qc_passed.txt'))
+index<-'01_muscle_RNAseq/data/reference/index/mm10'
+if(!file.exists(paste0(index,'.ready'))) stop('Missing reference index; run build_index.R first.')
+if(!all(file.exists(paste0('01_muscle_RNAseq/data/clean/',meta$run_accession,'.qc_passed')))) stop('Missing prerequisite files; run the previous stage first.')
+gtf<-'01_muscle_RNAseq/data/reference/gencode.vM25.exons.gtf'
+dir.create('01_muscle_RNAseq/data/bam_unique',recursive=TRUE,showWarnings=FALSE)
+dir.create('01_muscle_RNAseq/outputs/alignment',recursive=TRUE,showWarnings=FALSE)
 count_one<-function(bam,strand) featureCounts(files=bam,annot.ext=gtf,isGTFAnnotationFile=TRUE,GTF.featureType='exon',GTF.attrType='gene_id',useMetaFeatures=TRUE,isPairedEnd=TRUE,countReadPairs=TRUE,requireBothEndsMapped=TRUE,countChimericFragments=FALSE,countMultiMappingReads=FALSE,allowMultiOverlap=FALSE,strandSpecific=strand,nthreads=8)
 for(i in seq_len(nrow(meta))){
- run<-meta$run_accession[i];bam<-paste0('work/gdf15/data/bam_unique/',run,'.bam');result<-paste0('work/gdf15/data/bam_unique/',run,'_counts.rds')
+ run<-meta$run_accession[i];bam<-paste0('01_muscle_RNAseq/data/bam_unique/',run,'.bam');result<-paste0('01_muscle_RNAseq/data/bam_unique/',run,'_counts.rds')
  if(file.exists(result))next
- fastq<-paste0('work/gdf15/data/clean/',run,'_',1:2,'.fastq.gz')
+ fastq<-paste0('01_muscle_RNAseq/data/clean/',run,'_',1:2,'.fastq.gz')
  if(!all(file.exists(fastq)))stop('Clean FASTQ not ready: ',run)
  if(!file.exists(paste0(bam,'.ready'))){
   cat(format(Sys.time()),'ALIGN START',run,'\n');flush.console()
@@ -27,17 +28,18 @@ for(i in seq_len(nrow(meta))){
   if(mapping[4,1]!=0)stop('unique=TRUE still reports multimapping fragments')
   writeLines('complete',paste0(bam,'.ready'))
  }
- if(!file.exists('outputs/alignment/selected_strand.txt')){
+ if(!file.exists('01_muscle_RNAseq/outputs/alignment/selected_strand.txt')){
   tests<-lapply(0:2,function(s)count_one(bam,s));assigned<-vapply(tests,function(z)sum(z$counts),numeric(1))
-  write.csv(data.frame(strand=0:2,assigned_fragments=assigned),'outputs/alignment/strand_validation.csv',row.names=FALSE)
+  write.csv(data.frame(strand=0:2,assigned_fragments=assigned),'01_muscle_RNAseq/outputs/alignment/strand_validation.csv',row.names=FALSE)
   if(assigned[3]>5*max(assigned[2],1)){strand<-2L}else if(assigned[2]>5*max(assigned[3],1)){strand<-1L}else stop('Strandedness ambiguous; inspect assignment and metadata before counting')
-  writeLines(as.character(strand),'outputs/alignment/selected_strand.txt')
+  writeLines(as.character(strand),'01_muscle_RNAseq/outputs/alignment/selected_strand.txt')
   counts<-tests[[strand+1]]
- }else{strand<-as.integer(readLines('outputs/alignment/selected_strand.txt'));counts<-count_one(bam,strand)}
+ }else{strand<-as.integer(readLines('01_muscle_RNAseq/outputs/alignment/selected_strand.txt'));counts<-count_one(bam,strand)}
  if(sum(counts$counts)>readRDS(paste0(bam,'_mapping.rds'))[3,1])stop('Assigned fragments exceed uniquely mapped fragments')
  saveRDS(counts,result)
- write.csv(counts$stat,paste0('outputs/alignment/',run,'_assignment.csv'),row.names=FALSE)
+ write.csv(counts$stat,paste0('01_muscle_RNAseq/outputs/alignment/',run,'_assignment.csv'),row.names=FALSE)
  cat(format(Sys.time()),'COUNT PASS',run,'assigned',sum(counts$counts),'strand',strand,'\n');flush.console()
 }
 
 cat('ALIGNMENT WORKER COMPLETE',worker,'\n')
+

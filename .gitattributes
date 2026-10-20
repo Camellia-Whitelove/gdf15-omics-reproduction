@@ -1,10 +1,11 @@
-# Normalise line endings across platforms
 * text=auto
-
-# Binary formats that must not be modified
+*.R text eol=lf
+*.py text eol=lf
+*.ps1 text eol=lf
+*.md text eol=lf
+*.csv text eol=lf
+*.tsv text eol=lf
+*.gz binary
 *.png binary
 *.pdf binary
-*.docx binary
-*.gz binary
-*.rds binary
 *.xlsx binary

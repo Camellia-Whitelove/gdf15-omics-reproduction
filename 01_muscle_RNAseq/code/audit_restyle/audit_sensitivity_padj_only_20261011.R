@@ -1,14 +1,16 @@
+source('01_muscle_RNAseq/code/common.R')
+# Historical BP diagnostic with relaxed selection. Not a successful Fig.4c MF reproduction.
 # Sensitivity analysis (documented, separate from main analysis):
 # DEG set = padj < 0.1 only (no |log2FC| threshold), GDF15 vs Pairfed.
 # Purpose: locate where the paper's Fig.4c cAMP/PKA signal could come from.
-.libPaths(c(normalizePath('work/gdf15/R-library'), .libPaths()))
+.libPaths(c(normalizePath('01_muscle_RNAseq/R-library', mustWork=FALSE), .libPaths()))
 suppressPackageStartupMessages({
   library(AnnotationDbi); library(org.Mm.eg.db); library(GOstats)
 })
-out <- 'outputs/audit_20261011'
+out <- '01_muscle_RNAseq/outputs/audit_20261011'
 sink(file.path(out, 'sensitivity_padj_only_GO.txt'), split = TRUE)
 
-res_gp <- read.csv('outputs/statistics/GDF15_vs_Pairfed.csv', stringsAsFactors = FALSE)
+res_gp <- read.csv('01_muscle_RNAseq/outputs/statistics/GDF15_vs_Pairfed.csv', stringsAsFactors = FALSE)
 deg <- res_gp[!is.na(res_gp$padj) & res_gp$padj < 0.1, ]
 cat('DEGs by padj<0.1 only (no LFC filter):', nrow(deg), 'genes\n')
 deg_entrez <- na.omit(unique(select(org.Mm.eg.db, keys = na.omit(deg$symbol),
@@ -43,3 +45,4 @@ run_hyperg <- function(universe, label) {
 run_hyperg(bg_expressed, 'expressed_background')
 run_hyperg(all_entrez, 'whole_database_background')
 sink()
+

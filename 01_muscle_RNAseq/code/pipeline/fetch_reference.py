@@ -1,6 +1,6 @@
 import concurrent.futures as cf, hashlib, pathlib, subprocess, time, gzip, shutil, json
-root=pathlib.Path(__file__).resolve().parent/'data'/'reference'
-root.mkdir(exist_ok=True)
+root=pathlib.Path(__file__).resolve().parents[2]/'data'/'reference'
+root.mkdir(parents=True,exist_ok=True)
 files=[('https://hgdownload.soe.ucsc.edu/goldenPath/mm10/bigZips/mm10.fa.gz',870141360),('https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/release_M25/gencode.vM25.annotation.gtf.gz',28542432)]
 expected_md5={'mm10.fa.gz':'db005b65828db31735f384e4c5787be5','gencode.vM25.annotation.gtf.gz':'0c38fc4ccbc731a2708fc91e7f1c2efd'}
 def piece(task):
@@ -15,7 +15,7 @@ records=[]
 for url,size in files:
     target=root/url.rsplit('/',1)[-1]
     if not target.exists() or target.stat().st_size!=size:
-        chunks=root/(target.name+'.chunks');chunks.mkdir(exist_ok=True)
+        chunks=root/(target.name+'.chunks');chunks.mkdir(parents=True,exist_ok=True)
         tasks=[]
         for start in range(0,size,4194304):
             end=min(size-1,start+4194303);path=chunks/f'{start:012d}.part'
@@ -39,3 +39,4 @@ for url,size in files:
     records.append(dict(url=url,bytes=target.stat().st_size,local_md5=digest,extracted_bytes=destination.stat().st_size,gzip_crc_pass=True))
     print('READY',destination.name,records[-1],flush=True)
 (root/'reference_manifest.json').write_text(json.dumps(records,indent=2),encoding='utf-8')
+

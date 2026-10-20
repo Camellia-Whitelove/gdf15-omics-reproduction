@@ -1,21 +1,23 @@
-# Handoff audit part 2: (A) rlog/vst identification of the author matrix
-#                         (B) GOstats-style GO enrichment re-run (Fig. 4c audit)
-.libPaths(c(normalizePath('work/gdf15/R-library'), .libPaths()))
+source('01_muscle_RNAseq/code/common.R')
+# Historical diagnostic: (A) compare rlog/VST scales, without identifying the author's transform.
+#                       (B) GO BP sensitivity, not the original Fig.4c MF analysis.
+# Use audit_fig4c_mf.R for the archived MF enrichment inputs and full-P-value BH correction.
+.libPaths(c(normalizePath('01_muscle_RNAseq/R-library', mustWork=FALSE), .libPaths()))
 suppressPackageStartupMessages({
   library(DESeq2); library(AnnotationDbi); library(org.Mm.eg.db)
   library(GO.db); library(GOstats)
 })
-out <- 'outputs/audit_20261011'
+out <- '01_muscle_RNAseq/outputs/audit_20261011'
 sink(file.path(out, 'transform_and_GOstats_audit.txt'), split = TRUE)
 
-author <- read.csv(gzfile('work/gdf15/data/GSE229794_CountsNormalizedByDESeq2.csv.gz'),
+author <- read.csv(gzfile('01_muscle_RNAseq/data/GSE229794_CountsNormalizedByDESeq2.csv.gz'),
                    check.names = FALSE, row.names = 1)
 am <- as.matrix(author); storage.mode(am) <- 'numeric'
 
-dds <- readRDS('outputs/statistics/deseq2_model.rds')
-meta <- read.csv('outputs/sample_metadata.csv', stringsAsFactors = FALSE)
+dds <- readRDS('01_muscle_RNAseq/outputs/statistics/deseq2_model.rds')
+meta <- read.csv('01_muscle_RNAseq/outputs/sample_metadata.csv', stringsAsFactors = FALSE)
 meta <- meta[match(colnames(dds), meta$sample_alias), ]
-ann <- read.csv('work/gdf15/data/reference/gene_annotation.csv', stringsAsFactors = FALSE)
+ann <- read.csv('01_muscle_RNAseq/data/reference/gene_annotation.csv', stringsAsFactors = FALSE)
 sym <- ann$symbol[match(rownames(dds), ann$gene_id)]
 
 ## ---- A) which variance-stabilising transform is the author matrix? ----
@@ -48,7 +50,7 @@ cat('mean slope rlog:', sprintf('%.4f', mean(report$slope_rlog)),
 
 ## ---- B) GOstats-style enrichment on our GDF15 vs Pairfed DEGs ----
 cat('\n=== B) GOstats re-run on our 35 DEGs (GDF15 vs Pairfed) ===\n')
-res_gp <- read.csv('outputs/statistics/GDF15_vs_Pairfed.csv', stringsAsFactors = FALSE)
+res_gp <- read.csv('01_muscle_RNAseq/outputs/statistics/GDF15_vs_Pairfed.csv', stringsAsFactors = FALSE)
 deg <- res_gp[which(res_gp$DEG), ]
 cat('DEG symbols:', nrow(deg), '; with symbol:', sum(!is.na(deg$symbol)), '\n')
 deg_entrez <- na.omit(unique(select(org.Mm.eg.db, keys = na.omit(deg$symbol),
@@ -91,3 +93,4 @@ cat('\nGOstats version:', as.character(packageVersion('GOstats')),
     '; GO.db:', as.character(packageVersion('GO.db')), '\n')
 cat('AUDIT PART 2 COMPLETE\n')
 sink()
+

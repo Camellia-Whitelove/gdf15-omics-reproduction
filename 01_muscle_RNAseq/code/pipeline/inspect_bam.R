@@ -1,6 +1,7 @@
-.libPaths(c(normalizePath('work/gdf15/R-library'),.libPaths()))
+source('01_muscle_RNAseq/code/common.R')
+.libPaths(c(normalizePath('01_muscle_RNAseq/R-library', mustWork=FALSE),.libPaths()))
 suppressPackageStartupMessages(library(Rsamtools))
-bam<-BamFile('work/gdf15/data/bam/SRR24179000.bam',yieldSize=500000)
+bam<-BamFile('01_muscle_RNAseq/data/bam/SRR24179000.bam',yieldSize=500000)
 open(bam);total<-0;nh<-integer();mq<-integer();flags<-integer()
 accumulate<-function(a,x){x<-as.character(x);x[is.na(x)]<-'<missing>';t<-table(x);keys<-union(names(a),names(t));out<-setNames(rep(0,length(keys)),keys);out[names(a)]<-a;out[names(t)]<-out[names(t)]+as.numeric(t);out}
 repeat{
@@ -12,5 +13,6 @@ repeat{
  if(total %% 5000000==0){cat(total,'records checked\n');flush.console()}
 }
 close(bam)
-for(pair in list(list('NH',nh),list('MAPQ',mq),list('FLAGS',flags)))write.csv(data.frame(value=names(pair[[2]]),records=as.numeric(pair[[2]])),paste0('outputs/alignment/first_BAM_',pair[[1]],'.csv'),row.names=FALSE)
+for(pair in list(list('NH',nh),list('MAPQ',mq),list('FLAGS',flags)))write.csv(data.frame(value=names(pair[[2]]),records=as.numeric(pair[[2]])),paste0('01_muscle_RNAseq/outputs/alignment/first_BAM_',pair[[1]],'.csv'),row.names=FALSE)
 cat('ALL RECORDS',total,'\nNH:\n');print(nh);cat('MAPQ:\n');print(mq)
+

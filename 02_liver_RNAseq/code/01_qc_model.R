@@ -1,3 +1,5 @@
+extra <- Sys.getenv('GDF15_R_LIB'); if(nzchar(extra)) .libPaths(c(extra,.libPaths()))
+if (dir.exists('02_liver_RNAseq/code')) setwd('02_liver_RNAseq')
 # Run from the handoff root. Optional GDF15_R_LIB points to a local R library.
 extra <- Sys.getenv('GDF15_R_LIB')
 if(nzchar(extra)) .libPaths(c(extra,.libPaths()))
@@ -68,3 +70,4 @@ write.csv(data.frame(package=pkgs,version=vapply(pkgs,function(p)as.character(pa
 writeLines(c('Source-count matrix QC, filtering, DESeq2 fitting, VST/rlog, PCA and three distance methods completed.',paste('Retained genes:',sum(keep)), 'No samples automatically removed. Library flags and Cooks distances are diagnostic only.', 'No liver FASTQ quality control, alignment, Salmon tximport lengths or offsets were performed/supplied.', 'PCA top500; centered, unscaled; PC1/PC4. Clustering: complete linkage.',capture.output(sessionInfo())),'06_records/session_and_methods.txt')
 writeLines('success','06_records/modeling_complete.txt')
 cat('MODELING COMPLETE\n');print(do.call(rbind,pv));print(do.call(rbind,summary))
+

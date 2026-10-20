@@ -1,6 +1,6 @@
 import pathlib, csv, openpyxl, json, hashlib
-root=pathlib.Path(__file__).resolve().parent/'data'
-out=pathlib.Path('outputs/physiology');out.mkdir(exist_ok=True)
+root=pathlib.Path(__file__).resolve().parents[2]/'data'
+out=pathlib.Path(__file__).resolve().parents[2]/'outputs/physiology';out.mkdir(parents=True,exist_ok=True)
 w=openpyxl.load_workbook(root/'source_MOESM4.xlsx',read_only=True,data_only=True)
 ws=w['Fig.2d,e']; rows=list(ws.values); ee=[]
 for c in range(1,13):
@@ -49,3 +49,4 @@ assert len(observations)==43
 with (out/'fig2k_body_mass_and_EE.csv').open('w',newline='') as f:
     writer=csv.DictWriter(f,fieldnames=observations[0]);writer.writeheader();writer.writerows(observations)
 print('Fig2k EXTRACTED 43 animals; BW and EE joined by named group and within-group source order. No individual mouse identifiers supplied in these tables.',flush=True)
+

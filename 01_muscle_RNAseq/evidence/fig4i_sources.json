@@ -1,0 +1,18 @@
+{
+  "source_article": "10.1038/s41586-023-06249-4",
+  "extracted_table": "fig4i_values.csv",
+  "worksheets": [
+    {
+      "local_archive": "source_MOESM6.xlsx",
+      "sheet": "Fig.4i",
+      "bytes": 81424,
+      "sha256": "cf6a59645db2cd55efc9eb63f578cca184631e0c2a4fde4fb673b1f0bdea1a25"
+    },
+    {
+      "local_archive": "source_MOESM15.xlsx",
+      "sheet": "ED.Fig10o",
+      "bytes": 43525,
+      "sha256": "b7460ae27e78e045033a78abbdd76d056d380e0d94b4f1b80ccd32055dfa3df6"
+    }
+  ]
+}

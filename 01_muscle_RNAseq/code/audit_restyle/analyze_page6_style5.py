@@ -1,3 +1,5 @@
+from pathlib import Path
+MODULE = Path(__file__).resolve().parents[2]
 # -*- coding: utf-8 -*-
 # Final: heatmap colorbar location, legend swatches, top annotation, panel i y-axis label text.
 import sys, io, collections
@@ -5,7 +7,7 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 import pdfplumber
 import pypdfium2 as pdfium
 
-PDF = r'C:\GDF15_核心图交接包_20261011\04_论文与要求\s41586-023-06249-4.pdf'
+PDF = str(MODULE/'data/paper.pdf')
 SCALE = 300 / 72
 plumb = pdfplumber.open(PDF)
 page = plumb.pages[5]
@@ -74,3 +76,4 @@ print('\n=== tick label chars (x 515-530, y 350-460) ===')
 for c in page.chars:
     if 514 < c['x0'] < 530 and 350 < c['top'] < 460:
         print(repr(c['text']), 'x=%.1f y=%.1f' % (c['x0'], c['top']))
+

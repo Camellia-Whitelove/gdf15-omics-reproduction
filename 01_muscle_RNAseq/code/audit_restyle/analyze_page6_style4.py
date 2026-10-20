@@ -1,3 +1,5 @@
+from pathlib import Path
+MODULE = Path(__file__).resolve().parents[2]
 # -*- coding: utf-8 -*-
 # Final style details: panel i point colors, group colors from panels a/g bars, legend swatches.
 import sys, io, collections
@@ -5,7 +7,7 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 import pdfplumber
 import pypdfium2 as pdfium
 
-PDF = r'C:\GDF15_核心图交接包_20261011\04_论文与要求\s41586-023-06249-4.pdf'
+PDF = str(MODULE/'data/paper.pdf')
 SCALE = 300 / 72
 plumb = pdfplumber.open(PDF)
 page = plumb.pages[5]
@@ -82,3 +84,4 @@ xs0 = sorted(set(round(r['x0']) for r in cells))
 ys0 = sorted(set(round(r['top']) for r in cells))
 print('heatmap x grid n=', len(xs0), 'first/last:', xs0[:3], xs0[-3:])
 print('heatmap y grid n=', len(ys0), 'first/last:', ys0[:3], ys0[-3:])
+

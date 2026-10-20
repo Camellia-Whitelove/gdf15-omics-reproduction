@@ -1,14 +1,15 @@
+source('01_muscle_RNAseq/code/common.R')
 # Handoff audit 2026-10-11: author processed expression matrix vs current pipeline
 # 1) Identify transformation of the author matrix (log2 / VST-family hypothesis)
 # 2) Sample/gene correspondence between author columns and our samples
 # 3) Compare fold changes (GDF15 vs Pairfed, GDF15 vs Vehicle)
 # All outputs go to outputs/audit_20261011/ (no handoff files are overwritten)
 
-out <- 'outputs/audit_20261011'
+out <- '01_muscle_RNAseq/outputs/audit_20261011'
 dir.create(out, recursive = TRUE, showWarnings = FALSE)
 sink(file.path(out, 'author_matrix_audit.txt'), split = TRUE)
 
-author <- read.csv(gzfile('work/gdf15/data/GSE229794_CountsNormalizedByDESeq2.csv.gz'),
+author <- read.csv(gzfile('01_muscle_RNAseq/data/GSE229794_CountsNormalizedByDESeq2.csv.gz'),
                    check.names = FALSE, row.names = 1)
 am <- as.matrix(author)
 storage.mode(am) <- 'numeric'
@@ -22,13 +23,13 @@ cat('fractional part of 2^x within 0.01 of integer:',
 cat('genes with duplicated rownames:', sum(duplicated(rownames(am))), '\n')
 
 ## Our normalized counts
-norm <- read.csv('outputs/statistics/DESeq2_normalized_counts.csv',
+norm <- read.csv('01_muscle_RNAseq/outputs/statistics/DESeq2_normalized_counts.csv',
                  check.names = FALSE, stringsAsFactors = FALSE)
 rownames(norm) <- norm$gene_id; norm$gene_id <- NULL
 nm <- as.matrix(norm)
-meta <- read.csv('outputs/sample_metadata.csv', stringsAsFactors = FALSE)
+meta <- read.csv('01_muscle_RNAseq/outputs/sample_metadata.csv', stringsAsFactors = FALSE)
 meta <- meta[match(colnames(nm), meta$sample_alias), ]
-ann <- read.csv('work/gdf15/data/reference/gene_annotation.csv', stringsAsFactors = FALSE)
+ann <- read.csv('01_muscle_RNAseq/data/reference/gene_annotation.csv', stringsAsFactors = FALSE)
 sym <- ann$symbol[match(rownames(nm), ann$gene_id)]
 cat('\n=== Our matrix ===\n')
 cat('dim:', nrow(nm), 'x', ncol(nm), '; mapped symbols:', sum(!is.na(sym)), '\n')
@@ -84,8 +85,8 @@ lfc_gvp_author <- rowMeans(am[, gdf_cols]) - rowMeans(am[, pair_cols])
 lfc_gvv_author <- rowMeans(am[, gdf_cols]) - rowMeans(am[, veh_cols])
 names(lfc_gvp_author) <- rownames(am); names(lfc_gvv_author) <- rownames(am)
 
-res_gp <- read.csv('outputs/statistics/GDF15_vs_Pairfed.csv', stringsAsFactors = FALSE)
-res_gv <- read.csv('outputs/statistics/GDF15_vs_Vehicle.csv', stringsAsFactors = FALSE)
+res_gp <- read.csv('01_muscle_RNAseq/outputs/statistics/GDF15_vs_Pairfed.csv', stringsAsFactors = FALSE)
+res_gv <- read.csv('01_muscle_RNAseq/outputs/statistics/GDF15_vs_Vehicle.csv', stringsAsFactors = FALSE)
 m1 <- match(names(lfc_gvp_author), res_gp$symbol)
 m2 <- match(names(lfc_gvv_author), res_gv$symbol)
 ok1 <- !is.na(m1) & !is.na(res_gp$log2FoldChange[ifelse(is.na(m1), 1L, m1)])
@@ -116,3 +117,4 @@ write.csv(data.frame(author_column = colnames(am), best_our_sample = meta$sample
           file.path(out, 'author_column_sample_matching.csv'), row.names = FALSE)
 cat('\nAUDIT PART 1 COMPLETE\n')
 sink()
+

@@ -1,3 +1,5 @@
+extra <- Sys.getenv('GDF15_R_LIB'); if(nzchar(extra)) .libPaths(c(extra,.libPaths()))
+if (dir.exists('02_liver_RNAseq/code')) setwd('02_liver_RNAseq')
 extra<-Sys.getenv('GDF15_R_LIB');if(nzchar(extra)).libPaths(c(extra,.libPaths()))
 suppressPackageStartupMessages(library(DESeq2))
 dds<-readRDS('03_models/DESeq2_fitted_model.rds')
@@ -16,3 +18,4 @@ for(nm in c('VST_Euclidean','rlog_Euclidean','raw_Poisson')) {
  stopifnot(max(abs(m-t(m)))<1e-8,all(diag(m)==0),all(m>=0),identical(rownames(m),colnames(dds)))
 }
 cat('PASS: source counts, model factors, dispersions, transformed values, PCA coordinates and distance matrices agree.\n')
+

@@ -1,0 +1,29 @@
+{
+  "completed_at": "2026-10-10T22:42:32+08:00",
+  "status": "slim_handoff_complete",
+  "raw_download": "32/32 size+MD5 pass",
+  "raw_QC": "complete",
+  "trimming": "complete",
+  "clean_QC": "complete",
+  "index": "complete",
+  "alignment": "16/16 unique-only BAM integrity pass",
+  "counting": "16/16 complete",
+  "RNA_statistics": "complete",
+  "DEG_counts": {
+    "GDF15_vs_Pairfed": 35,
+    "GDF15_vs_Vehicle": 39,
+    "Pairfed_vs_Vehicle": 78
+  },
+  "Fig2k": "exploratory only; pairing unverified and KO parallel slopes rejected",
+  "Fig2e": "not reproduced: matching body masses missing",
+  "handoff_at": "2026-10-11T10:57:06+08:00",
+  "Fig4b": "generated; clustering reviewed; does not cleanly separate all groups",
+  "Fig4c": "not reproduced; audited 2026-10-11: no cAMP/PKA enrichment under stated thresholds; whole-database GOstats universe inflates significance (see 02_处理记录/接手核查记录_20261011.md)",
+  "author_normalized_matrix": "identified 2026-10-11 as DESeq2 VST values (r=0.976, slope=0.998 vs our vst); not raw or log2 counts; sample correspondence 16/16 verified",
+  "next_task": "Continue remaining core-figure reproduction (Fig.2e body-mass data, Fig.2k pairing) or write up; Fig.4c audit closed",
+  "handoff": "Verified slim package; full-copy attempt was stopped yesterday",
+  "updated_at": "2026-10-11",
+  "author_processed_expression": "structure checked; transformation identified as VST; gene/sample correspondence and LFC concordance (Spearman 0.75) performed; audit outputs in 01_继续分析项目/outputs/audit_20261011/",
+  "handoff_folder": "C:\\GDF15_核心图交接包_20261011",
+  "handoff_zip_sha256_verified": "BD318EEB7E9BC4FE28BCF99C9FC7C7BD21D5CCBD728665A9D8217B16EBCBD099 matches .sha256.txt"
+}

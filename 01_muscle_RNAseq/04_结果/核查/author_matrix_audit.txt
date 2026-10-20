@@ -1,0 +1,75 @@
+=== Author matrix structure ===
+dim: 14538 genes x 16 samples
+columns: Vehicle.1, Vehicle.2, Vehicle.3, Vehicle.4, Vehicle.5, GDF15.1, GDF15.2, GDF15.3, GDF15.4, GDF15.5, GDF15.6, PairFed.2, PairFed.3, PairFed.4, PairFed.5, PairFed.6 
+value range: 7.3199 - 19.9637
+any negative / zero: FALSE 
+fractional part of 2^x within 0.01 of integer: 0.01909221 
+genes with duplicated rownames: 0 
+
+=== Our matrix ===
+dim: 22032 x 16 ; mapped symbols: 22032 
+Vehicle : GSM7177833, GSM7177834, GSM7177835, GSM7177836, GSM7177837 
+GDF15 : GSM7177838, GSM7177839, GSM7177840, GSM7177841, GSM7177842, GSM7177843 
+Pairfed : GSM7177844, GSM7177845, GSM7177846, GSM7177847, GSM7177848 
+
+common gene symbols (author vs ours): 14310 / 14538 author genes
+
+=== Sample correspondence (best-matching sample per author column) ===
+Vehicle.1  -> GSM7177833   Vehicle  r=0.892
+Vehicle.2  -> GSM7177834   Vehicle  r=0.893
+Vehicle.3  -> GSM7177835   Vehicle  r=0.892
+Vehicle.4  -> GSM7177836   Vehicle  r=0.893
+Vehicle.5  -> GSM7177837   Vehicle  r=0.893
+GDF15.1    -> GSM7177838   GDF15    r=0.893
+GDF15.2    -> GSM7177839   GDF15    r=0.893
+GDF15.3    -> GSM7177840   GDF15    r=0.891
+GDF15.4    -> GSM7177841   GDF15    r=0.891
+GDF15.5    -> GSM7177842   GDF15    r=0.893
+GDF15.6    -> GSM7177843   GDF15    r=0.892
+PairFed.2  -> GSM7177844   Pairfed  r=0.891
+PairFed.3  -> GSM7177845   Pairfed  r=0.893
+PairFed.4  -> GSM7177846   Pairfed  r=0.893
+PairFed.5  -> GSM7177847   Pairfed  r=0.891
+PairFed.6  -> GSM7177848   Pairfed  r=0.892
+group agreement for best match: 16 / 16 
+
+=== Transformation regression: author ~ a + b * log2(our norm counts + 1) ===
+Vehicle.1  vs GSM7177833   slope=0.3777 intercept=6.4000 r2=0.7965 resid_sd=0.5904
+Vehicle.2  vs GSM7177834   slope=0.3819 intercept=6.3612 r2=0.7980 resid_sd=0.5829
+Vehicle.3  vs GSM7177835   slope=0.3778 intercept=6.4003 r2=0.7960 resid_sd=0.5914
+Vehicle.4  vs GSM7177836   slope=0.3786 intercept=6.3881 r2=0.7979 resid_sd=0.5838
+Vehicle.5  vs GSM7177837   slope=0.3804 intercept=6.3738 r2=0.7982 resid_sd=0.5835
+GDF15.1    vs GSM7177838   slope=0.3808 intercept=6.3715 r2=0.7967 resid_sd=0.5855
+GDF15.2    vs GSM7177839   slope=0.3830 intercept=6.3473 r2=0.7976 resid_sd=0.5800
+GDF15.3    vs GSM7177840   slope=0.3771 intercept=6.4051 r2=0.7945 resid_sd=0.5933
+GDF15.4    vs GSM7177841   slope=0.3774 intercept=6.4014 r2=0.7937 resid_sd=0.5938
+GDF15.5    vs GSM7177842   slope=0.3797 intercept=6.3770 r2=0.7966 resid_sd=0.5846
+GDF15.6    vs GSM7177843   slope=0.3785 intercept=6.3922 r2=0.7960 resid_sd=0.5895
+PairFed.2  vs GSM7177844   slope=0.3753 intercept=6.4231 r2=0.7942 resid_sd=0.5946
+PairFed.3  vs GSM7177845   slope=0.3791 intercept=6.3882 r2=0.7966 resid_sd=0.5889
+PairFed.4  vs GSM7177846   slope=0.3798 intercept=6.3823 r2=0.7976 resid_sd=0.5860
+PairFed.5  vs GSM7177847   slope=0.3750 intercept=6.4270 r2=0.7935 resid_sd=0.5991
+PairFed.6  vs GSM7177848   slope=0.3797 intercept=6.3730 r2=0.7959 resid_sd=0.5830
+
+=== Local slope author ~ log2(our norm+1) by expression decile (Vehicle.1 vs GSM7177833) ===
+[0.248,1.79]           n= 1431 mean_log2_our=  1.05 slope=0.098 r2=0.079
+(1.79,3.64]            n= 1431 mean_log2_our=  2.71 slope=0.108 r2=0.198
+(3.64,5.13]            n= 1431 mean_log2_our=  4.42 slope=0.165 r2=0.111
+(5.13,6.2]             n= 1431 mean_log2_our=  5.70 slope=0.290 r2=0.197
+(6.2,7.03]             n= 1431 mean_log2_our=  6.63 slope=0.391 r2=0.198
+(7.03,7.72]            n= 1431 mean_log2_our=  7.37 slope=0.454 r2=0.179
+(7.72,8.36]            n= 1431 mean_log2_our=  8.04 slope=0.492 r2=0.182
+(8.36,9.07]            n= 1431 mean_log2_our=  8.71 slope=0.581 r2=0.230
+(9.07,10.1]            n= 1431 mean_log2_our=  9.54 slope=0.735 r2=0.333
+(10.1,19.5]            n= 1431 mean_log2_our= 11.38 slope=0.917 r2=0.907
+
+=== Fold-change concordance (author matrix implied LFC vs our DESeq2 LFC) ===
+GDF15 vs Pairfed : n = 14310  pearson r = 0.492  spearman rho = 0.752 
+GDF15 vs Vehicle : n = 14310  pearson r = 0.510  spearman rho = 0.740 
+
+=== DEG overlap, GDF15 vs Pairfed, threshold |LFC|>0.6 (author scale has no padj) ===
+our DEGs (padj<0.1 & |LFC|>0.6): 35 
+author-matrix genes with |LFC|>0.6: 12 
+overlap: 7 
+
+AUDIT PART 1 COMPLETE

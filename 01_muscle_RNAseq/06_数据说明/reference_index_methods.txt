@@ -1,0 +1,25 @@
+UCSC mm10 FASTA: official MD5 db005b65828db31735f384e4c5787be5 verified.
+Gapped index (one 16-mer every 3 bases), single block; selected to keep memory below 32 GB while QC runs.
+Alignment will use explicit GENCODE M25 annotation, not the default mm39.
+R version 4.6.1 (2026-06-24 ucrt)
+Platform: x86_64-w64-mingw32/x64
+Running under: Windows 11 x64 (build 26200)
+
+Matrix products: default
+  LAPACK version 3.12.1
+
+locale:
+[1] C
+system code page: 65001
+
+time zone: Asia/Shanghai
+tzcode source: internal
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] Rsubread_2.26.0
+
+loaded via a namespace (and not attached):
+[1] compiler_4.6.1 Matrix_1.7-5   grid_4.6.1     lattice_0.22-9

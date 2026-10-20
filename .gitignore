@@ -1,0 +1,41 @@
+# R
+.Rhistory
+.RData
+.Rproj.user/
+*.Rproj
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# 大体积中间文件（可由脚本重新生成 / 从公共数据库下载）
+*.fastq.gz
+*.fq.gz
+*.fastq
+*.bam
+*.bai
+*.sam
+*.cram
+R-library/
+*.rds
+*.gtf
+*.fa
+*.fna
+*.fa.gz
+
+# 参考与索引
+reference/
+reference_index/
+index/
+
+# 系统与编辑器
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 临时与日志
+*.log
+tmp/
+temp/

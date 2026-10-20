@@ -1,0 +1,144 @@
+=== A) author matrix vs our rlog / vst (same genes, matched samples) ===
+                 author_col our_sample r_author_rlog r_author_vst slope_rlog
+rld[common, i]    Vehicle.1 GSM7177833         0.880        0.977      0.360
+rld[common, i]1   Vehicle.2 GSM7177834         0.880        0.976      0.357
+rld[common, i]2   Vehicle.3 GSM7177835         0.880        0.976      0.360
+rld[common, i]3   Vehicle.4 GSM7177836         0.881        0.977      0.358
+rld[common, i]4   Vehicle.5 GSM7177837         0.880        0.977      0.358
+rld[common, i]5     GDF15.1 GSM7177838         0.879        0.976      0.358
+rld[common, i]6     GDF15.2 GSM7177839         0.879        0.976      0.355
+rld[common, i]7     GDF15.3 GSM7177840         0.880        0.976      0.360
+rld[common, i]8     GDF15.4 GSM7177841         0.880        0.976      0.360
+rld[common, i]9     GDF15.5 GSM7177842         0.880        0.976      0.357
+rld[common, i]10    GDF15.6 GSM7177843         0.880        0.976      0.359
+rld[common, i]11  PairFed.2 GSM7177844         0.880        0.976      0.361
+rld[common, i]12  PairFed.3 GSM7177845         0.880        0.976      0.359
+rld[common, i]13  PairFed.4 GSM7177846         0.880        0.977      0.359
+rld[common, i]14  PairFed.5 GSM7177847         0.880        0.977      0.362
+rld[common, i]15  PairFed.6 GSM7177848         0.879        0.977      0.356
+                 slope_vst r2_rlog r2_vst
+rld[common, i]       0.998   0.775  0.954
+rld[common, i]1      0.998   0.774  0.953
+rld[common, i]2      0.998   0.774  0.953
+rld[common, i]3      0.997   0.776  0.954
+rld[common, i]4      0.998   0.775  0.954
+rld[common, i]5      0.999   0.773  0.952
+rld[common, i]6      0.998   0.773  0.952
+rld[common, i]7      0.998   0.774  0.953
+rld[common, i]8      0.999   0.774  0.953
+rld[common, i]9      0.998   0.774  0.953
+rld[common, i]10     0.998   0.774  0.953
+rld[common, i]11     0.999   0.774  0.953
+rld[common, i]12     0.998   0.774  0.953
+rld[common, i]13     0.998   0.775  0.954
+rld[common, i]14     0.999   0.774  0.954
+rld[common, i]15     0.998   0.773  0.954
+mean cor author~rlog: 0.8798  mean cor author~vst: 0.9763 
+mean slope rlog: 0.3588  mean slope vst: 0.9982 
+
+=== B) GOstats re-run on our 35 DEGs (GDF15 vs Pairfed) ===
+DEG symbols: 35 ; with symbol: 35 
+DEG ENTREZ ids: 35 
+expressed background ENTREZ: 17722 
+whole-database background ENTREZ: 112257 
+
+-- expressed_background : BP terms tested = 1489 ; terms with raw P<0.05 = 375 ; BH<0.1 = 0
+       GOBPID                                                           Term
+1  GO:1901652                                            response to peptide
+2  GO:0016052                                 carbohydrate catabolic process
+3  GO:0034097                                           response to cytokine
+4  GO:0046496                      nicotinamide nucleotide metabolic process
+5  GO:0072524                 pyridine-containing compound metabolic process
+6  GO:0071345                         cellular response to cytokine stimulus
+7  GO:0006096                                             glycolytic process
+8  GO:0046426 negative regulation of receptor signaling pathway via JAK-STAT
+9  GO:0046032                                          ADP catabolic process
+10 GO:0009137                purine nucleoside diphosphate catabolic process
+     Pvalue  padj Count Size
+1  8.74e-05 0.104     9  939
+2  4.45e-04 0.104     4  174
+3  4.71e-04 0.104     8  924
+4  5.17e-04 0.104     4  181
+5  5.84e-04 0.104     4  187
+6  1.33e-03 0.104     7  830
+7  1.33e-03 0.104     3  105
+8  1.43e-03 0.104     2   27
+9  1.48e-03 0.104     3  109
+10 1.60e-03 0.104     3  112
+cAMP/PKA-related terms:
+         GOBPID
+80   GO:0140582
+722  GO:0007193
+826  GO:0021766
+1028 GO:0007189
+1181 GO:0045860
+1182 GO:0007188
+1319 GO:0045859
+                                                                               Term
+80   adenylate cyclase-activating G protein-coupled cAMP receptor signaling pathway
+722       adenylate cyclase-inhibiting G protein-coupled receptor signaling pathway
+826                                                         hippocampus development
+1028      adenylate cyclase-activating G protein-coupled receptor signaling pathway
+1181                                 positive regulation of protein kinase activity
+1182      adenylate cyclase-modulating G protein-coupled receptor signaling pathway
+1319                                          regulation of protein kinase activity
+      Pvalue  padj Count Size
+80   0.00831 0.150     1    4
+722  0.12893 0.264     1   66
+826  0.16296 0.293     1   85
+1028 0.25122 0.364     1  138
+1181 0.33889 0.427     1  197
+1182 0.34028 0.428     1  198
+1319 0.49948 0.564     1  328
+
+-- whole_database_background : BP terms tested = 1492 ; terms with raw P<0.05 = 553 ; BH<0.1 = 280
+       GOBPID                                           Term   Pvalue   padj
+1  GO:1901652                            response to peptide 2.07e-05 0.0249
+2  GO:0009966              regulation of signal transduction 9.07e-05 0.0249
+3  GO:0016052                 carbohydrate catabolic process 1.07e-04 0.0249
+4  GO:0046496      nicotinamide nucleotide metabolic process 1.16e-04 0.0249
+5  GO:0023051                        regulation of signaling 1.25e-04 0.0249
+6  GO:0010646               regulation of cell communication 1.28e-04 0.0249
+7  GO:0072524 pyridine-containing compound metabolic process 1.32e-04 0.0249
+8  GO:0034097                           response to cytokine 1.34e-04 0.0249
+9  GO:0035556              intracellular signal transduction 2.57e-04 0.0403
+10 GO:0006096                             glycolytic process 4.50e-04 0.0403
+   Count Size
+1      9 1297
+2     13 3326
+3      4  199
+4      4  203
+5     14 3951
+6     14 3960
+7      4  210
+8      8 1276
+9     12 3166
+10     3  120
+cAMP/PKA-related terms:
+         GOBPID
+119  GO:0140582
+886  GO:0021766
+896  GO:0007193
+1154 GO:0007189
+1167 GO:0045860
+1273 GO:0007188
+1318 GO:0045859
+                                                                               Term
+119  adenylate cyclase-activating G protein-coupled cAMP receptor signaling pathway
+886                                                         hippocampus development
+896       adenylate cyclase-inhibiting G protein-coupled receptor signaling pathway
+1154      adenylate cyclase-activating G protein-coupled receptor signaling pathway
+1167                                 positive regulation of protein kinase activity
+1273      adenylate cyclase-modulating G protein-coupled receptor signaling pathway
+1318                                          regulation of protein kinase activity
+      Pvalue   padj Count Size
+119  0.00623 0.0768     1    5
+886  0.12324 0.2075     1  105
+896  0.12763 0.2121     1  109
+1154 0.23074 0.2981     1  209
+1167 0.24229 0.3095     1  221
+1273 0.32200 0.3774     1  309
+1318 0.36441 0.4122     1  360
+
+GOstats version: 2.78.0 ; org.Mm.eg.db: 3.23.0 ; GO.db: 3.23.1 
+AUDIT PART 2 COMPLETE

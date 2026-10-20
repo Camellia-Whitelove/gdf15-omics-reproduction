@@ -1,0 +1,18 @@
+{
+  "paused_at": "2026-10-10T21:46:53.988845+08:00",
+  "reason": "用户要求先暂停并编写数据处理记录",
+  "raw_download": "32/32 size+MD5 pass",
+  "raw_QC": "complete",
+  "trimming": "complete",
+  "clean_QC": "complete",
+  "index": "complete",
+  "alignment_complete_runs": [
+    "SRR24179000"
+  ],
+  "counting_provisional_runs": [
+    "SRR24179000"
+  ],
+  "interrupted_run": "SRR24178999",
+  "RNA_statistics": "not executed",
+  "next_action": "核查多重比对输出标签和唯一比对计数策略"
+}

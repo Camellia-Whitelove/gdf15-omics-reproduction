@@ -1,0 +1,20 @@
+
+Call:
+lm(formula = dark_EE_kcal_h ~ body_mass_g + condition, data = z)
+
+Residuals:
+      Min        1Q    Median        3Q       Max 
+-0.033941 -0.017421  0.000575  0.016331  0.036449 
+
+Coefficients:
+                Estimate Std. Error t value Pr(>|t|)  
+(Intercept)     0.257430   0.085169   3.023   0.0128 *
+body_mass_g     0.001678   0.001842   0.911   0.3839  
+conditionGDF15 -0.013964   0.013953  -1.001   0.3405  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.02493 on 10 degrees of freedom
+Multiple R-squared:  0.1418,	Adjusted R-squared:  -0.02986 
+F-statistic: 0.826 on 2 and 10 DF,  p-value: 0.4656
+

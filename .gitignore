@@ -26,7 +26,7 @@ __pycache__/
 .venv/
 venv/
 
-# ������м��ļ������ɽű��������� / �ӹ������ݿ����أ�
+# 大体积中间文件（可由脚本重新生成 / 从公共数据库下载）
 *.fastq.gz
 *.fq.gz
 *.fastq
@@ -41,17 +41,17 @@ R-library/
 *.fna
 *.fa.gz
 
-# �ο�������
+# 参考与索引
 reference/
 reference_index/
 index/
 
-# ϵͳ��༭��
+# 系统与编辑器
 .DS_Store
 Thumbs.db
 desktop.ini
 
-# ��ʱ����־
+# 临时与日志
 *.log
 tmp/
 temp/

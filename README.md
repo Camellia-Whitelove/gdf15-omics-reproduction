@@ -82,7 +82,7 @@ Rscript run.R fig4c
 Rscript run.R fig4i
 ```
 
-使用 `evidence/fig4i_values.csv` 中从作者Source Data提取并保留单元格位置的16个值，在R中重算双侧非配对Student t检验、均值和SEM。此入口的纵轴从0开始；旧论文样式重绘使用从3开始的截断轴。数据来源及交叉核对见[数据说明](docs/data_sources.md)。这不等于独立重复动物实验。
+使用 `evidence/fig4i_values.csv` 中从作者Source Data提取并保留单元格位置的16个值，在R中重算双侧非配对Student t检验、均值和SEM。此入口默认使用旧版论文样式：Pair-fed红色、GDF15蓝色，均值±SEM和单只动物散点，纵轴范围为3至6。统计数据和检验不变；输出为 `01_muscle_RNAseq/outputs/figures/paper_style/Fig4i_calcium_respiration_paperstyle.png` 及同名PDF。截断轴会强化视觉差异，讲解时需要说明。数据来源及交叉核对见[数据说明](docs/data_sources.md)。这不等于独立重复动物实验。
 
 ## 其他文件与提交材料
 

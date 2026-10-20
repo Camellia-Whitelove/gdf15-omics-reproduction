@@ -1,0 +1,10 @@
+# Normalise line endings across platforms
+* text=auto
+
+# Binary formats that must not be modified
+*.png binary
+*.pdf binary
+*.docx binary
+*.gz binary
+*.rds binary
+*.xlsx binary

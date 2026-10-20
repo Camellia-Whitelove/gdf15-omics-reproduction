@@ -1,3 +1,0 @@
-Exported for handoff, not a new differential-expression analysis.
-org.Mm.eg.db version: 3.23.0
-Many-to-many mapping is retained. Missing/duplicate symbols must be handled explicitly when comparing the author expression table.
